@@ -1,0 +1,17 @@
+# GigaChat SDK for AI dialogue
+gigachat>=0.1.0
+
+# Salute Speech for voice processing (STT/TTS)
+salute-speech>=0.1.0
+
+# Voximplant for ATS/telephony integration
+voximplant-apiclient>=1.5.0
+
+# Qdrant for vector database and knowledge base
+qdrant-client>=1.7.0
+
+# Additional dependencies
+pydantic>=2.0.0
+python-dotenv>=1.0.0
+aiohttp>=3.9.0
+asyncio>=3.4.3
