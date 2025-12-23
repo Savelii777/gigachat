@@ -47,6 +47,10 @@ class VoximplantConfig(BaseModel):
         default=None,
         description="Voximplant rule ID for scenarios"
     )
+    sms_source_number: Optional[str] = Field(
+        default=None,
+        description="Source phone number for sending SMS"
+    )
 
 
 class QdrantConfig(BaseModel):
@@ -112,8 +116,9 @@ class Config(BaseModel):
             ),
             voximplant=VoximplantConfig(
                 credentials_file_path=os.getenv("VOXIMPLANT_CREDENTIALS_PATH", ""),
-                application_id=int(os.getenv("VOXIMPLANT_APP_ID", "0")) or None,
-                rule_id=int(os.getenv("VOXIMPLANT_RULE_ID", "0")) or None,
+                application_id=int(app_id) if (app_id := os.getenv("VOXIMPLANT_APP_ID")) else None,
+                rule_id=int(rule_id) if (rule_id := os.getenv("VOXIMPLANT_RULE_ID")) else None,
+                sms_source_number=os.getenv("VOXIMPLANT_SMS_SOURCE_NUMBER"),
             ),
             qdrant=QdrantConfig(
                 url=os.getenv("QDRANT_URL", "http://localhost:6333"),

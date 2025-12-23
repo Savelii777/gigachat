@@ -138,8 +138,15 @@ class QdrantKnowledgeBase:
                     "metadata": doc.get("metadata", {}),
                 }
                 
+                # Use UUID for string IDs to avoid hash collisions
+                if isinstance(point_id, int):
+                    numeric_id = point_id
+                else:
+                    # Generate a unique numeric ID from UUID
+                    numeric_id = uuid.uuid5(uuid.NAMESPACE_DNS, str(point_id)).int % (2**63)
+                
                 points.append(PointStruct(
-                    id=point_id if isinstance(point_id, int) else hash(point_id) % (10**9),
+                    id=numeric_id,
                     vector=embeddings[i],
                     payload=payload,
                 ))
@@ -264,9 +271,10 @@ class QdrantKnowledgeBase:
         try:
             from qdrant_client.models import PointIdsList
             
-            # Convert string IDs to integer hashes
+            # Convert string IDs to integer using UUID5 (same as in add_documents)
             point_ids = [
-                hash(doc_id) % (10**9) if isinstance(doc_id, str) else doc_id
+                uuid.uuid5(uuid.NAMESPACE_DNS, str(doc_id)).int % (2**63) 
+                if isinstance(doc_id, str) else doc_id
                 for doc_id in document_ids
             ]
             

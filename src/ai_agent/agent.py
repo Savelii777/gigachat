@@ -1,7 +1,7 @@
 """Main AI Agent class that orchestrates dialogue with executors."""
 import asyncio
 import logging
-from typing import Optional, List, Callable
+from typing import Optional, List, Callable, Dict
 from dataclasses import dataclass, field
 from enum import Enum
 
@@ -73,7 +73,7 @@ class AIAgent:
         self.knowledge_base = QdrantKnowledgeBase(config.qdrant)
         
         # Active sessions
-        self._active_sessions: dict[str, CallSession] = {}
+        self._active_sessions: Dict[str, CallSession] = {}
         
         # Callbacks
         self._on_call_completed: Optional[Callable[[CallSession], None]] = None

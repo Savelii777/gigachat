@@ -241,9 +241,13 @@ class VoximplantClient:
             logger.error("Voximplant API not initialized")
             return False
         
+        if not self.config.sms_source_number:
+            logger.error("SMS source number not configured")
+            return False
+        
         try:
             response = self._api.send_sms_message(
-                source="+79000000000",  # Configure your source number
+                source=self.config.sms_source_number,
                 destination=phone_number,
                 sms_body=message,
             )
