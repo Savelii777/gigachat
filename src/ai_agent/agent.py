@@ -1,7 +1,7 @@
 """Main AI Agent class that orchestrates dialogue with executors."""
 import asyncio
 import logging
-from typing import Optional, List, Callable, Dict
+from typing import Optional, List, Callable, Dict, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 
@@ -156,7 +156,7 @@ class AIAgent:
         session_id: str,
         audio_data: Optional[bytes] = None,
         text_response: Optional[str] = None,
-    ) -> tuple[str, Optional[bytes]]:
+    ) -> Tuple[str, Optional[bytes]]:
         """Process executor's response and generate agent's reply.
         
         Args:
@@ -232,7 +232,7 @@ class AIAgent:
     async def generate_initial_greeting(
         self,
         session_id: str,
-    ) -> tuple[str, Optional[bytes]]:
+    ) -> Tuple[str, Optional[bytes]]:
         """Generate the initial greeting for a call.
         
         Args:
